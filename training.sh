@@ -7,11 +7,12 @@
 #SBATCH --ntasks=1   # number of tasks
 #SBATCH --cpus-per-task=1   # number of CPUs Per Task i.e if your code is multi-threaded
 #SBATCH --nodes=1   # number of nodes
-#SBATCH --mem=2000M   # memory per node
-#SBATCH -J "training_no0"   # job name
-#SBATCH -o "training_no0"   # job output file
-#SBATCH -e "training_no0"   # job error file
-
+#SBATCH --mem=8000M   # memory per node
+#SBATCH --array=1-8
+#SBATCH -J "training_no_ctrl"   # job name
+#SBATCH -o "training_no_ctrl_%J"   # job output file
+#SBATCH -e "training_no_ctrl_%J"   # job error file
 
 # LOAD MODULES, INSERT CODE, AND RUN YOUR PROGRAMS HERE
-/hps/software/users/birney/fanny/cnn_venv/bin/python /nfs/research/birney/users/fanny/medaka/ziram_analysis/scripts_cnn/train_metrics.py
+/hps/software/users/birney/fanny/default/bin/python /nfs/research/birney/users/fanny/medaka/ziram_analysis/scripts_cnn/train_metrics.py -Y /homes/fanny/research/medaka/ziram_analysis/scripts_cnn/params_file/param_screen.yml
+
