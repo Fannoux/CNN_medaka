@@ -1,0 +1,60 @@
+CONFIG:
+  DEVICE: cuda
+  EXP_NAME: full_Ziram_dataset
+  NAME: test
+  OUTPUT_PATH: '/nfs/research/birney/users/fanny/medaka/ziram_analysis/outputs_Summer2024'
+  EPOCHS: 3
+  MLFLOW: True
+  MLFLOW_OUT: /nfs/research/birney/users/fanny/medaka/ziram_analysis/mlruns
+  PLOT_AUROC: True
+
+
+DATASET:
+  dataset_path: /nfs/research/birney/users/fanny/medaka/ziram_analysis/ziram_dataset/Dataset_picture_repartition.csv
+  filename: png_CO4
+  label: kinks_2
+  num_class: 5
+  validation_ratio: 0.2
+  shuffle: True
+  augment: True
+
+MODEL:
+  mean: 
+    - 0.485
+    - 0.456
+    - 0.406
+  std: 
+    - 0.229
+    - 0.224
+    - 0.225
+  freeze: True
+  mode: 'categorical'
+  model_dict:
+    repo_or_dir: pytorch/vision:v0.10.0
+    model: resnet18
+    pretrained: True
+    skip_validation: True
+
+
+HYPERPARAMS: 
+  mode: 'simple'
+  IMAGE_SIZE: 256
+  BATCH_SIZE: 5
+  PRED_BATCH_SIZE: 5
+  LR: 0.001
+
+
+METRICS:
+  RANDOM:
+    - AUROC
+  VALIDATION:
+    - AUROC 
+    - ACCURACY
+    - LOSS
+  TRAINING: 
+    - AUROC 
+    - ACCURACY
+    - LOSS
+  EVALUATION:
+    - AUROC
+    - CONF_MATRIX  

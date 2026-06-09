@@ -1,0 +1,63 @@
+CONFIG:
+  DEVICE: cuda
+  EXP_NAME: Ziram_tif_CO4
+  NAME: resnet18_SC_cat
+  OUTPUT_PATH: /nfs/research/birney/users/fanny/medaka/ziram_analysis/outputs_Summer2024
+  EPOCHS: 50
+  MLFLOW: True
+  MLFLOW_OUT: /nfs/research/birney/users/fanny/medaka/ziram_analysis/outputs_Summer2024/mlruns
+  PLOT_AUROC: True
+
+DATASET:
+  dataset_path: /nfs/research/birney/users/fanny/medaka/ziram_analysis/ziram_dataset/Dataset_picture_repartition.csv
+  filename: tif_CO4
+  label: severity_score
+  num_class: 5
+  validation_ratio: 0.2
+  shuffle: True
+  augment: True
+
+MODEL:
+  mode: 'categorical'
+  model_dict:
+    repo_or_dir: pytorch/vision:v0.10.0
+    model: resnet18
+    pretrained: True
+    skip_validation: True
+  mean: 
+    - 0.485
+    - 0.456
+    - 0.406
+  std: 
+    - 0.229
+    - 0.224
+    - 0.225
+  freeze: True
+
+METRICS:
+  RANDOM:
+    - AUROC
+  VALIDATION:
+    - AUROC 
+    - ACCURACY
+    - LOSS
+  TRAINING: 
+    - AUROC 
+    - ACCURACY
+    - LOSS
+  EVALUATION:
+    - AUROC
+    - CONF_MATRIX  
+
+HYPERPARAMS:
+  mode: 'screen'
+  IMAGE_SIZE:
+  - 256
+  - 512
+  BATCH_SIZE: 
+  - 16
+  - 24
+  LR: 
+  - 0.01
+  - 0.001
+
